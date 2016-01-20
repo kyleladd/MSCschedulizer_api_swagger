@@ -1,0 +1,30 @@
+{
+  "name": "MSCschedulizer_api_swagger",
+  "version": "1.0.0",
+  "description": "API to generate class schedules for MSCschedulizer",
+  "main": "index.js",
+  "keywords": [
+    "swagger"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "swagger-tools": "0.8.*",
+    "node-mysql-nesting": "latest",
+    "mysql": "latest",
+    "async" : "latest",
+    "node_generic_functions":"https://github.com/kyleladd/node_generic_functions.git",
+    "js-combinatorics":"latest",
+    "util":"latest"
+  },
+   "devDependencies": {
+    "mocha"    : "latest",
+    "expect.js":"latest",
+    "chai":"latest",
+    "chai-spies":"latest",
+    "sinon":"latest",
+    "sinon-chai":"latest",
+    "supertest":"latest"
+  }
+}

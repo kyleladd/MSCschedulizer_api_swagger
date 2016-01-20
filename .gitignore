@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+#DB config
+mysql_config.js
+
+# Logs
+npm-debug.log

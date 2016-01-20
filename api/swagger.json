@@ -1,0 +1,186 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MSCschedulizer API",
+    "description": "Generate class schedules with MSCschedulizer",
+    "version": "1.0.0"
+  },
+  "produces": ["application/json"],
+  "host": "localhost:8014",
+  "basePath": "/v1",
+  "paths": {
+  
+  "/schedule": {
+    
+    "get": {
+      "summary": "Get the valid schedule combinations or show information for a schedule.",
+      "description":"The Schedule endpoint returns all valid schedule combinations or shows information for a schedule",
+      "x-swagger-router-controller": "Schedules",
+      "tags": ["Schedules"],
+      "operationId": "scheduleGet",
+            "parameters": [
+        {
+  "name" : "courses",
+  "in" : "query",
+  "description" : "Get all possible schedules for the input courses.",
+  "required" : true,
+  "type" : "number",
+  "format" : "integer"
+}
+        
+      ],
+      "responses": {
+        "200": {
+  "description" : "An array of departments",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/Department"
+    }
+  }
+}
+        ,
+        "default": {
+  "description" : "Unexpected error",
+  "schema" : {
+    "$ref" : "#/definitions/Error"
+  }
+}
+        
+        
+      }
+    } 
+    
+  } ,
+  
+  
+  "/departments": {
+    
+    "get": {
+      "summary": "List all Departments",
+      "description":"The Departments endpoint returns all the departments",
+      "x-swagger-router-controller": "Departments",
+      "tags": ["Departments"],
+      "operationId": "departmentsGet",
+      "responses": {
+        "200": {
+  "description" : "An array of departments",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/Department"
+    }
+  }
+}
+        ,
+        "default": {
+  "description" : "Unexpected error",
+  "schema" : {
+    "$ref" : "#/definitions/Error"
+  }
+}
+        
+        
+      }
+    } 
+    
+  } ,
+  
+  
+  "/courses": {
+    
+    "get": {
+      "summary": "List all Courses",
+      "description":"The Courses endpoint returns all the Courses being offered",
+      "x-swagger-router-controller": "Courses",
+      "tags": ["Courses"],
+      "operationId": "coursesGet",
+      "parameters": [
+        {
+  "name" : "id",
+  "in" : "query",
+  "description" : "Get the information for a particular course.",
+  "required" : false,
+  "type" : "number",
+  "format" : "integer"
+},
+        {
+  "name" : "department_id",
+  "in" : "query",
+  "description" : "Get the courses within a department.",
+  "required" : false,
+  "type" : "number",
+  "format" : "integer"
+}
+        
+      ],
+      "responses": {
+        "200": {
+  "description" : "An array of courses",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/Course"
+    }
+  }
+}
+        ,
+        "default": {
+  "description" : "Unexpected error",
+  "schema" : {
+    "$ref" : "#/definitions/Error"
+  }
+}
+        
+        
+      }
+    } 
+    
+  } 
+  
+  }, "definitions": {
+  "Course": {
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "integer",
+      "description" : "Unique identifier representing a specific course. PK."
+    },
+    "departmentId" : {
+      "type" : "integer",
+      "description" : "FK to the department in which the course belongs."
+    },
+    "courseNumber" : {
+      "type" : "string",
+      "description" : "The course number"
+    }
+  }
+},"Department": {
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "integer",
+      "description" : "Unique identifier representing a specific department. PK"
+    },
+    "abbreviation" : {
+      "type" : "string",
+      "description" : "Department abbreviation such as CIT, AGBS, PHYS."
+    }
+  }
+},"Error": {
+  "type" : "object",
+  "properties" : {
+    "code" : {
+      "type" : "integer",
+      "format" : "int32"
+    },
+    "message" : {
+      "type" : "string"
+    },
+    "fields" : {
+      "type" : "string"
+    }
+  }
+}
+  }
+}
