@@ -53,7 +53,7 @@ exports.scheduleGet = function(courses, callback) {
               var course = nestedRows[i];
               var aSectionCombination = schedule.getSectionCombinations(course.course_sections);
               sectionCombinations.push(aSectionCombination);
-              courseslist.push({id:course.id,name:course.name,department:course.departments});
+              courseslist.push({id:course.id,name:course.name,courseNumber:course.courseNumber,department:course.departments});
             }
             var scheduleCombinations = schedule.getScheduleCombinations(sectionCombinations);
             // For each schedule
