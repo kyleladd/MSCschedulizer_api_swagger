@@ -63,10 +63,9 @@ var doSectionsOverlap = function(section1,section2){
         for (var w = section1.course_terms.term_weeks.length-1; w >= 0; w--) {
             weeks1.push(section1.course_terms.term_weeks[w].week);
         }
-        for (var w = section1.course_terms.term_weeks.length-1; w >= 0; w--) {
+        for (var w = section2.course_terms.term_weeks.length-1; w >= 0; w--) {
             weeks2.push(section2.course_terms.term_weeks[w].week);
         }
-
         if(doWeeksOverlap(weeks1,weeks2)){
             return true;
         }
