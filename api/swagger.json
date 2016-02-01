@@ -85,6 +85,49 @@
     } 
     
   } ,
+
+    "/coursesections": {
+    
+    "get": {
+      "summary": "List all Course Sections within department",
+      "description":"the Course Sections endpoint aids in recreating the course listings pages in tabular form",
+      "x-swagger-router-controller": "CourseSections",
+      "tags": ["CourseSections"],
+      "operationId": "courseSectionsGet",
+      "parameters": [
+        {
+  "name" : "department_id",
+  "in" : "query",
+  "description" : "Get the course sections within a department.",
+  "required" : true,
+  "type" : "number",
+  "format" : "integer"
+}
+        
+      ],
+      "responses": {
+        "200": {
+  "description" : "An array of course sections",
+  "schema" : {
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/CourseSection"
+    }
+  }
+}
+        ,
+        "default": {
+  "description" : "Unexpected error",
+  "schema" : {
+    "$ref" : "#/definitions/Error"
+  }
+}
+        
+        
+      }
+    } 
+    
+  } ,
   
   
   "/courses": {
@@ -153,6 +196,50 @@
     "courseNumber" : {
       "type" : "string",
       "description" : "The course number"
+    }
+  }
+},"CourseSection": {
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "integer",
+      "description" : "Unique identifier representing a specific department. PK"
+    },
+    "name" : {
+      "type" : "string",
+      "description" : "Section Number"
+    },
+    "course_id" : {
+      "type" : "integer",
+      "description" : "FK to courses pk"
+    },
+    "courseterm_id" : {
+      "type" : "integer",
+      "description" : "fk to term weeks pk"
+    },
+    "courseCRN" : {
+      "type" : "string",
+      "description" : ""
+    },
+    "instructor" : {
+      "type" : "string",
+      "description" : ""
+    },
+    "currentEnrollment" : {
+      "type" : "integer",
+      "description" : ""
+    },
+    "maxEnrollment" : {
+      "type" : "integer",
+      "description" : ""
+    },
+    "credits" : {
+      "type" : "integer",
+      "description" : ""
+    },
+    "identifier" : {
+      "type" : "string",
+      "description" : ""
     }
   }
 },"Department": {
