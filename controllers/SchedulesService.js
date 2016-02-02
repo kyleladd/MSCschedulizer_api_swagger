@@ -11,7 +11,6 @@ var mysqlConnection = mysql_config.connectToDatabase();
 exports.scheduleGet = function(courses, callback) {
     var sectionCombinations = [];
     var courseslist = [];
-    var outputCombinations = [];
     if(typeof courses != 'undefined'){
         // Any more than 20 courses selected is ridiculous
         if(courses.length > 20){
@@ -58,15 +57,15 @@ exports.scheduleGet = function(courses, callback) {
             var scheduleCombinations = schedule.getScheduleCombinations(sectionCombinations);
             // For each schedule
             for (var h = scheduleCombinations.length-1; h >= 0; h--) {
-                outputCombinations[h] = [];
                 //for each class in the schedule
                 for (var c = scheduleCombinations[h].length-1; c >= 0; c--) {
                     var coursekey = genericfunctions.searchListDictionaries(courseslist,{id:scheduleCombinations[h][c][0].course_id});
-                    outputCombinations[h][c] = coursekey;
-                    outputCombinations[h][c].course_sections = scheduleCombinations[h][c];
+                    for (var s = scheduleCombinations[h][c].length-1; s >= 0; s--) {
+                        scheduleCombinations[h][c][s].course = coursekey;
+                    }
                 }
             }
-            callback(null,outputCombinations);
+            callback(null,scheduleCombinations);
         }
 	});
 }

@@ -35,7 +35,7 @@
   "schema" : {
     "type" : "array",
     "items" : {
-      "$ref" : "#/definitions/Department"
+      "$ref" : "#/definitions/Course"
     }
   }
 }
