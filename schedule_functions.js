@@ -29,11 +29,11 @@ var doTimesOverlap = function(timeblock1,timeblock2){
 };
 
 var doWeeksOverlap = function(weeks1,weeks2){
-    for (var w = weeks1.length-1; w >= 0; w--) {
-        if(weeks1[w] in weeks2){
-            return true;
-        }
-    }
+    // for (var w = weeks1.length-1; w >= 0; w--) {
+    //     if(weeks1[w] in weeks2){
+    //         return true;
+    //     }
+    // }
     return false;
 };
 
@@ -67,10 +67,23 @@ var doSectionsOverlap = function(section1,section2){
             weeks2.push(section2.course_terms.term_weeks[w].week);
         }
         if(doWeeksOverlap(weeks1,weeks2)){
+        // if(doWeeksOverlap(section1.course_terms.term_weeks,section2.course_terms.term_weeks)){
             return true;
         }
     }
     return false;
+};
+
+var convertTermWeeksToList = function(term_weeks){
+    var weeks = [];
+    // console.log(course_section.course_terms);
+    for (var w = term_weeks.length-1; w >= 0; w--) {
+        // console.log(course_section.course_terms.term_weeks);
+        weeks.push(term_weeks[w].week);
+    }
+    // console.log("return");
+    // console.log(weeks);
+    return weeks;
 };
 
 var groupSections = function(course_sections){
@@ -163,6 +176,7 @@ module.exports = {
 	doDaysOverlap:doDaysOverlap,
 	doTimesOverlap:doTimesOverlap,
 	doWeeksOverlap:doWeeksOverlap,
+    convertTermWeeksToList:convertTermWeeksToList,
 	doMeetingsOverlap:doMeetingsOverlap,
 	doSectionsOverlap:doSectionsOverlap,
 	groupSections:groupSections,

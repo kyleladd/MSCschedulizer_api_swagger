@@ -154,6 +154,14 @@
   "required" : false,
   "type" : "number",
   "format" : "integer"
+},
+{
+  "name" : "courses",
+  "in" : "query",
+  "description" : "Get all possible schedules for the input courses.",
+  "required" : false,
+  "type" : "number",
+  "format" : "integer"
 }
         
       ],

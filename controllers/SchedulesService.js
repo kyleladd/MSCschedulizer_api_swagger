@@ -12,6 +12,7 @@ exports.scheduleGet = function(courses, callback) {
     var sectionCombinations = [];
     var courseslist = [];
     var outputCombinations = [];
+    var theRealOutput = [];
     if(typeof courses != 'undefined'){
         // Any more than 20 courses selected is ridiculous
         if(courses.length > 20){
@@ -49,24 +50,41 @@ exports.scheduleGet = function(courses, callback) {
         }
         else {
             var nestedRows = mysqlnesting.convertToNested(rows, nestingOptions);
-            for (var i in nestedRows) {
-              var course = nestedRows[i];
-              var aSectionCombination = schedule.getSectionCombinations(course.course_sections);
-              sectionCombinations.push(aSectionCombination);
-              courseslist.push({id:course.id,name:course.name,courseNumber:course.courseNumber,department:course.departments});
+
+            for (var i = nestedRows.length-1; i >= 0; i--) {
+                var course = nestedRows[i];
+                for (var s = course.course_sections.length-1; s >= 0; s--) {
+                    var weeks = schedule.convertTermWeeksToList(course.course_sections[s].course_terms.term_weeks).slice();
+                    console.log(weeks);
+                    course.course_sections[s].course_terms.term_weeks = [];
+                    for(var w in weeks){
+                        course.course_sections[s].course_terms.term_weeks.push(weeks[w]);
+                    }
+                }
+                var aSectionCombination = schedule.getSectionCombinations(course.course_sections);
+                sectionCombinations.push(aSectionCombination);
+                courseslist.push({id:course.id,name:course.name,courseNumber:course.courseNumber,department:course.departments});
             }
             var scheduleCombinations = schedule.getScheduleCombinations(sectionCombinations);
             // For each schedule
-            for (var h = scheduleCombinations.length-1; h >= 0; h--) {
+            for (var h = 0; h < scheduleCombinations.length; h++) {
                 outputCombinations[h] = [];
-                //for each class in the schedule
-                for (var c = scheduleCombinations[h].length-1; c >= 0; c--) {
+            //     //for each class in the schedule
+                for (var c = 0; c < scheduleCombinations[h].length; c++) {
+                    outputCombinations[h][c] = {};
                     var coursekey = genericfunctions.searchListDictionaries(courseslist,{id:scheduleCombinations[h][c][0].course_id});
                     outputCombinations[h][c] = coursekey;
                     outputCombinations[h][c].course_sections = scheduleCombinations[h][c];
                 }
+                console.log("PUSHING");
+                console.log(util.inspect(outputCombinations[h], false, null));
+
+                theRealOutput.push(outputCombinations[h]);
             }
-            callback(null,outputCombinations);
+            console.log("END RESULT");
+            console.log(util.inspect(theRealOutput, false, null));
+            console.log("WHY ARE THESE DIFFERENT?");
+            callback(null,theRealOutput);
         }
 	});
 }
