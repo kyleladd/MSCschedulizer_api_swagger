@@ -62,8 +62,9 @@ exports.scheduleGet = function(courses, callback) {
                 //for each class in the schedule
                 for (var c = scheduleCombinations[h].length-1; c >= 0; c--) {
                     var coursekey = genericfunctions.searchListDictionaries(courseslist,{id:scheduleCombinations[h][c][0].course_id});
-                    outputCombinations[h][c] = coursekey;
-                    outputCombinations[h][c].course_sections = scheduleCombinations[h][c];
+                    // Deep copy around ByRef
+                    outputCombinations[h][c] = JSON.parse(JSON.stringify(coursekey));
+                    outputCombinations[h][c].course_sections = JSON.parse(JSON.stringify(scheduleCombinations[h][c]));
                 }
             }
             callback(null,outputCombinations);
